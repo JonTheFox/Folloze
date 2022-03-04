@@ -13,7 +13,7 @@ export class litAutocomplete extends LitElement {
   static get properties() {
     return {
       //5
-      fulllist: {type: Array},
+      options: {type: Array},
       opened: {type: Boolean, reflect: true},
       maxSuggestions: Number,
     };
@@ -42,9 +42,9 @@ export class litAutocomplete extends LitElement {
   }
 
   //12.
-  set fulllist(value) {
+  set options(_options) {
     //13.
-    this.items = value;
+    this.items = _options;
   }
 
   //14.
@@ -59,12 +59,7 @@ export class litAutocomplete extends LitElement {
     this._matches = [];
 
     //18.
-
-    const allOptions = demoData.map((text) => {
-      console.log({text, value: text});
-      return {text, value: text};
-    });
-    this.items = allOptions;
+    this.items = demoData.map((text) => ({text, value: text}));
 
     //19.
     this.opened = false;
@@ -206,7 +201,11 @@ export class litAutocomplete extends LitElement {
           //36.
           if (suggestions.length === 0) {
             suggestions = [];
-            suggestions.push({value: null, text: 'Sorry, No matches'});
+            suggestions.push({
+              value: null,
+              text: 'Sorry, No matches',
+              isNoMatchesText: true,
+            });
           }
 
           this.suggest(suggestions);
@@ -246,6 +245,7 @@ export class litAutocomplete extends LitElement {
   //40.
   _onBlur(ev) {
     this._blur = true;
+    return;
     !this._mouseEnter && this.close();
   }
 
@@ -258,6 +258,7 @@ export class litAutocomplete extends LitElement {
   _handleItemMouseLeave(ev) {
     this._mouseEnter = false;
     //43.
+    return;
     this._blur && this.close();
   }
 
@@ -316,16 +317,24 @@ export class litAutocomplete extends LitElement {
           background: white;
           display: block;
           list-style-type: none;
-          width: 100% !important;
+          width: 100%;
           border: 1px solid black;
+          max-width: 1000px;
         }
 
-        li {
+        li.suggestion {
+          transition: all 0.1s;
+          opacity: 0.9;
           padding: 10px;
+          margin: 4px;
+          background: white;
+          border-radius: 8px;
         }
 
         li.active {
-          background: gray;
+          background: #2fffe0;
+          color: white;
+          opacity: 1;
         }
 
         [hidden] {
@@ -344,17 +353,18 @@ export class litAutocomplete extends LitElement {
         @mouseleave=${this._handleItemMouseLeave}
       >
         <!--50-->
-        ${this._matches.map(
-          (item) => html`
+        ${this._matches.map((item) => {
+          const className = item.isNoMatchesText ? 'no-matches' : 'suggestion';
+          return html`
             <li
-              class="suggestion"
+              class=${className}
               @click=${(ev) =>
                 this.autocomplete(item.text, item.value ? item.value : null)}
             >
               <span class="suggestion--text">${item.text}</span>
             </li>
-          `
-        )}
+          `;
+        })}
       </ul>
     `;
   }
