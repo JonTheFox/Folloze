@@ -256,7 +256,9 @@ export class litAutocomplete extends LitElement {
   //42.
   _handleItemMouseLeave(ev) {
     this._mouseEnter = false;
+
     //43.
+    console.log('this._blur: ', this._blur);
     this._blur && this.close();
   }
 
@@ -315,11 +317,19 @@ export class litAutocomplete extends LitElement {
           padding: 0;
           left: 0;
           z-index: 5000;
-          display: block;
           list-style-type: none;
           /* border: 1px solid black; */
           max-width: 800px;
           border-radius: 6px;
+          box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%),
+            0 6px 20px 0 rgb(0 0 0 / 19%);
+        }
+
+        #suggestions.dropdown-is-shown {
+          display: block;
+        }
+        #suggestions.dropdown-is-hidden {
+          display: none;
         }
 
         li.suggestion {
@@ -361,7 +371,7 @@ export class litAutocomplete extends LitElement {
 
       <ul
         id="suggestions"
-        ?hidden=${!this.opened}
+        class=${this.opened ? 'dropdown-is-shown' : 'dropdown-is-hidden'}
         @mouseenter=${this._handleItemMouseEnter}
         @mouseleave=${this._handleItemMouseLeave}
       >
