@@ -1,5 +1,6 @@
 //1.
 import {LitElement, html} from 'lit-element';
+import demoData from './mockData/demoData.js';
 
 //2.
 const MAX_MATCHES = 15;
@@ -58,7 +59,12 @@ export class litAutocomplete extends LitElement {
     this._matches = [];
 
     //18.
-    this.items = [];
+
+    const allOptions = demoData.map((text) => {
+      console.log({text, value: text});
+      return {text, value: text};
+    });
+    this.items = allOptions;
 
     //19.
     this.opened = false;
@@ -252,7 +258,7 @@ export class litAutocomplete extends LitElement {
   _handleItemMouseLeave(ev) {
     this._mouseEnter = false;
     //43.
-    this._blur && setTimeout((_) => this.close(), 500);
+    this._blur && this.close();
   }
 
   ////////////////////////////////////
@@ -341,10 +347,11 @@ export class litAutocomplete extends LitElement {
         ${this._matches.map(
           (item) => html`
             <li
+              class="suggestion"
               @click=${(ev) =>
                 this.autocomplete(item.text, item.value ? item.value : null)}
             >
-              ${item.text}
+              <span class="suggestion--text">${item.text}</span>
             </li>
           `
         )}

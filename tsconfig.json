@@ -28,6 +28,6 @@
       }
     ]
   },
-  "include": ["src/**/*.ts", "src/autocomplete.js"],
+  "include": ["src/**/*.ts", "src/autocomplete.js", "index.ts"],
   "exclude": []
 }
