@@ -3,9 +3,16 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Lit Starter Kit</title>
+    <title>Autocomplete</title>
   </head>
+
   <body>
-    <a href="/dev/index.html">Component Demo</a>
+    <h1>Autocomplete</h1>
+    <lit-autocomplete>
+      fulllist='[ {"value": "1", "text": "hello"}, {"value": "2", "text": "hi"}.
+      {"value": "3", "text": "How are you"}. {"value": "4", "text": "My name
+      is"}. ]'
+      <input type="text" placeholder="search value" />
+    </lit-autocomplete>
   </body>
 </html>
