@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "esnext",
     "module": "es2020",
     "lib": ["es2020", "DOM", "DOM.Iterable"],
     "declaration": true,
@@ -28,6 +28,6 @@
       }
     ]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/autocomplete.js"],
   "exclude": []
 }
