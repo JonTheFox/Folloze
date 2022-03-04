@@ -72,7 +72,7 @@ export class litAutocomplete extends LitElement {
   firstUpdated() {
     this._suggestionEl = this.shadowRoot.getElementById('suggestions');
     this._suggestionEl.style.width =
-      this.contentElement.getBoundingClientRect().width + 'px';
+      this.contentElement.getBoundingClientRect().width - 4 + 'px';
 
     //22.
     this._eventReferences.onFocus = this._onFocus.bind(this);
@@ -245,7 +245,6 @@ export class litAutocomplete extends LitElement {
   //40.
   _onBlur(ev) {
     this._blur = true;
-    return;
     !this._mouseEnter && this.close();
   }
 
@@ -258,7 +257,6 @@ export class litAutocomplete extends LitElement {
   _handleItemMouseLeave(ev) {
     this._mouseEnter = false;
     //43.
-    return;
     this._blur && this.close();
   }
 
@@ -309,31 +307,46 @@ export class litAutocomplete extends LitElement {
   render() {
     return html`
       <style>
-        ul {
+        #suggestions {
           position: absolute;
-          margin: 0;
-          padding: 0;
-          z-index: 5000;
+          margin: 6px auto;
           background: white;
+          margin-top: 6px;
+          padding: 0;
+          left: 0;
+          z-index: 5000;
           display: block;
           list-style-type: none;
-          width: 100%;
-          border: 1px solid black;
-          max-width: 1000px;
+          /* border: 1px solid black; */
+          max-width: 800px;
+          border-radius: 6px;
         }
 
         li.suggestion {
           transition: all 0.1s;
-          opacity: 0.9;
           padding: 10px;
           margin: 4px;
           background: white;
           border-radius: 8px;
         }
 
-        li.active {
-          background: #2fffe0;
-          color: white;
+        .glass {
+          background: rgba(255, 255, 255, 0.25);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        li.suggestion.active {
+          background: rgba(255, 255, 255, 0.25);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          color: black;
           opacity: 1;
         }
 
@@ -354,7 +367,9 @@ export class litAutocomplete extends LitElement {
       >
         <!--50-->
         ${this._matches.map((item) => {
-          const className = item.isNoMatchesText ? 'no-matches' : 'suggestion';
+          const className = `${
+            item.isNoMatchesText ? 'no-matches' : 'suggestion'
+          }`;
           return html`
             <li
               class=${className}

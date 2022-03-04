@@ -1,3 +1,80 @@
 * {
   font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  position: relative;
+}
+
+h1 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.title {
+  padding-top: 0.75rem;
+  padding-left: 1rem;
+  padding-bottom: 2.2rem;
+}
+
+#autocomplete--page {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-flow: column;
+  background-image: linear-gradient(
+    45deg,
+    hsl(240deg 10% 94%) 0%,
+    hsl(213deg 100% 94%) 11%,
+    hsl(192deg 100% 87%) 22%,
+    hsl(183deg 100% 74%) 33%,
+    hsl(180deg 100% 50%) 44%,
+    hsl(180deg 100% 50%) 56%,
+    hsl(177deg 100% 50%) 67%,
+    hsl(165deg 100% 50%) 78%,
+    hsl(149deg 100% 50%) 89%,
+    hsl(118deg 100% 50%) 100%
+  );
+}
+
+#autocomplete--input {
+  margin: auto;
+  width: 80vw;
+  max-width: 800px;
+  height: 40px;
+  border-radius: 6px;
+  border: 0.25px solid gray;
+  color: black;
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  margin-bottom: 8px;
+}
+
+section {
+  position: relative;
+  margin: auto;
+  height: auto;
+  width: auto;
+  margin-top: 0;
+  max-width: 800px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }

@@ -3,18 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Autocomplete example</title>
-    <script type="module" src="./src/autocomplete.js"></script>
+   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
   </head>
 
   <body>
-    <h1>Folloze</h1>
-  
-      <lit-autocomplete>
-          <input type="text" placeholder="search value" />
-      </nega-autocomplete>
+    <main id="autocomplete--page">
+      <h1 class="title">Folloze</h1>
+      <section>
+        <lit-autocomplete>
+            <input id="autocomplete--input" type="text" placeholder="search value" />
+        </nega-autocomplete>
+      </section>
+    </main>
   <link rel="stylesheet" href="./src/style.css">
+   <script type="module" src="./src/autocomplete.js"></script>
   </body>
 </html>
