@@ -1,7 +1,7 @@
 # Autocomplete Component
 
-This repository includes a fully-featured Autocomplete component.
-It is leveraging Web Components standars, and also uses some Lit and typescript.
+This repository includes a fully-featured autocomplete component with fuzzy-matching and matching highligting.
+The project is leveraging Web Components standards, and also uses some Lit and Typescript.
 
 # Running the project
 
