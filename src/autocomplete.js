@@ -361,7 +361,7 @@ export class litAutocomplete extends LitElement {
         }
 
         li .matching-char {
-          background: white;
+          background: yellow;
         }
 
         .glass {
@@ -389,8 +389,8 @@ export class litAutocomplete extends LitElement {
           opacity: 1;
         }
 
-        li.suggestion:not(.active):hover {
-          background: transparent;
+        li.suggestion:hover {
+          font-weight: bold;
         }
 
         [hidden] {
