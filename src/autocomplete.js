@@ -74,11 +74,14 @@ export class litAutocomplete extends LitElement {
     this._suggestionEl.style.width =
       this.contentElement.getBoundingClientRect().width - 4 + 'px';
 
-    //22.
+    this._suggestionEl.onclick = this._onItemClick.bind(this);
+
     this._eventReferences.onFocus = this._onFocus.bind(this);
     this._eventReferences.onBlur = this._onBlur.bind(this);
 
     this._eventReferences.onKeyDown = this._onKeyDown.bind(this);
+    this._eventReferences.onKeyUp = this._onKeyUp.bind(this);
+
     this._eventReferences.onKeyUp = this._onKeyUp.bind(this);
 
     //23.
@@ -248,6 +251,10 @@ export class litAutocomplete extends LitElement {
     !this._mouseEnter && this.close();
   }
 
+  _onItemClick(ev) {
+    this._mouseEnter = true;
+  }
+
   //41.
   _handleItemMouseEnter(ev) {
     this._mouseEnter = true;
@@ -387,8 +394,13 @@ export class litAutocomplete extends LitElement {
           return html`
             <li
               class=${className}
-              @click=${(ev) =>
-                this.autocomplete(item.text, item.value ? item.value : null)}
+              @click=${(ev) => {
+                console.log(item);
+                return this.autocomplete(
+                  item.text,
+                  item.value ? item.value : null
+                );
+              }}
             >
               <span class="suggestion--text">${item.text}</span>
             </li>
