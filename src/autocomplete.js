@@ -155,6 +155,10 @@ export class litAutocomplete extends LitElement {
       ev.preventDefault();
       ev.stopPropagation();
     }
+    if (ev.key === 'Enter') {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
   }
 
   //31.
@@ -369,6 +373,10 @@ export class litAutocomplete extends LitElement {
           border: 1px solid rgba(255, 255, 255, 0.18);
           color: black;
           opacity: 1;
+        }
+
+        li.suggestion:not(.active):hover {
+          background: lightgray;
         }
 
         [hidden] {
