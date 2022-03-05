@@ -323,7 +323,7 @@ export class litAutocomplete extends LitElement {
         #suggestions {
           position: absolute;
           margin: 6px auto;
-          background: white;
+          background: transparent;
           margin-top: 6px;
           padding: 0;
           left: 0;
@@ -371,12 +371,17 @@ export class litAutocomplete extends LitElement {
           -webkit-backdrop-filter: blur(4px);
           border-radius: 10px;
           border: 1px solid rgba(255, 255, 255, 0.18);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
           color: black;
           opacity: 1;
         }
 
         li.suggestion:not(.active):hover {
-          background: lightgray;
+          background: transparent;
         }
 
         [hidden] {
