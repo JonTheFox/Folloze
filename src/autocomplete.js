@@ -82,9 +82,7 @@ export class litAutocomplete extends LitElement {
     this._eventReferences.onKeyDown = this._onKeyDown.bind(this);
     this._eventReferences.onKeyUp = this._onKeyUp.bind(this);
 
-    this._eventReferences.onKeyUp = this._onKeyUp.bind(this);
-
-    //23.
+    // attach the event listeners
     this.contentElement.addEventListener(
       'focus',
       this._eventReferences.onFocus
@@ -95,15 +93,11 @@ export class litAutocomplete extends LitElement {
       'keydown',
       this._eventReferences.onKeyDown
     );
-    this.contentElement.addEventListener(
-      'keyup',
-      this._eventReferences.onKeyUp
-    );
+    window.addEventListener('keyup', this._eventReferences.onKeyUp);
   }
 
   //24.
   updated(changed) {
-    console.log('updated!!');
     if (
       //25.
       changed.has('opened') &&
@@ -151,6 +145,7 @@ export class litAutocomplete extends LitElement {
 
   _onKeyDown(ev) {
     //30.
+
     if (ev.key === 'ArrowUp' || ev.key === 'ArrowDown') {
       ev.preventDefault();
       ev.stopPropagation();
@@ -161,7 +156,6 @@ export class litAutocomplete extends LitElement {
     }
   }
 
-  //31.
   _onKeyUp(ev) {
     switch (ev.key) {
       //32.
@@ -183,12 +177,15 @@ export class litAutocomplete extends LitElement {
       case 'Enter':
         this._highlightedEl && this._highlightedEl.click();
         break;
+      case 'Escape':
+        this.close();
+        break;
       default:
         const items = this.items;
         if (items.length) {
           const searchTerm = this.contentElement.value;
           const maxSuggestions = this.maxSuggestions;
-          const suggestions = this.getSuggestions();
+          let suggestions = this.getSuggestions();
 
           //36.
           if (suggestions.length === 0) {
@@ -229,7 +226,6 @@ export class litAutocomplete extends LitElement {
 
   //39.
   _onFocus(ev) {
-    console.log('on focus!');
     this._blur = false;
     this._matches.length && this.open();
   }
@@ -252,9 +248,6 @@ export class litAutocomplete extends LitElement {
   //42.
   _handleItemMouseLeave(ev) {
     this._mouseEnter = false;
-
-    //43.
-    console.log('this._blur: ', this._blur);
     this._blur && this.close();
   }
 
@@ -289,7 +282,6 @@ export class litAutocomplete extends LitElement {
 
   //44.
   open() {
-    console.log('open()');
     if (this._matches.length) {
       this.opened = true;
     }
@@ -297,14 +289,12 @@ export class litAutocomplete extends LitElement {
 
   //45.
   close() {
-    console.log('close()');
     this.opened = false;
     this._highlightedEl = null;
   }
 
   //46.
   suggest(suggestions) {
-    console.log('suggest');
     this._matches = suggestions || [];
     this._matches.length ? this.open() : this.close();
     this.requestUpdate();
@@ -466,8 +456,6 @@ export class litAutocomplete extends LitElement {
               });
             }
           );
-
-          console.log(markedMatchingChars);
 
           return html`
             <li
