@@ -1,74 +1,47 @@
-//1.
 import {LitElement, html} from 'lit-element';
 import demoData from './mockData/demoData.js';
 
-//2.
 const MAX_MATCHES = 15;
 
-//3.
-const NO_RESULTS_MESSAGE_TIME = 5;
-
-//4.
 export class litAutocomplete extends LitElement {
   static get properties() {
     return {
-      //5
       options: {type: Array},
       opened: {type: Boolean, reflect: true},
       maxSuggestions: Number,
     };
   }
 
-  //6.
   get contentElement() {
-    //7.
     if (this._inputEl) {
-      //8.
       return this._inputEl;
     }
 
-    //9.
     var slotInputList = this.shadowRoot
       .getElementById('dropdown-input')
       .assignedNodes()[1];
 
-    //10.
     this._inputEl = slotInputList
       ? slotInputList
       : this.shadowRoot.getElementById('defaultInput');
 
-    //11.
     return this._inputEl;
   }
 
-  //12.
   set options(_options) {
-    //13.
     this.items = _options;
   }
 
-  //14.
   constructor() {
-    //15.
     super();
 
-    //16.
     this._eventReferences = {};
-
-    //17.
     this._matches = [];
-
-    //18.
     this.items = demoData.map((text) => ({text, value: text}));
-
-    //19.
     this.opened = false;
-
-    //20.
     this.maxSuggestions = MAX_MATCHES;
   }
 
-  //21.
   firstUpdated() {
     this._suggestionEl = this.shadowRoot.getElementById('suggestions');
     this._suggestionEl.style.width =
@@ -96,15 +69,12 @@ export class litAutocomplete extends LitElement {
     window.addEventListener('keyup', this._eventReferences.onKeyUp);
   }
 
-  //24.
   updated(changed) {
     if (
-      //25.
       changed.has('opened') &&
       this.opened &&
       this._suggestionEl.childElementCount
     ) {
-      //26.
       for (let item of this._suggestionEl.children) {
         item.classList.remove('active');
       }
@@ -113,14 +83,11 @@ export class litAutocomplete extends LitElement {
     }
   }
 
-  //27.
   disconnectedCallback() {
     if (!this.contentElement) {
-      //28.
       return;
     }
 
-    //29.
     this.contentElement.removeEventListener(
       'keydown',
       this._eventReferences.onKeyDown
@@ -144,8 +111,6 @@ export class litAutocomplete extends LitElement {
   ////////////////////////////////////
 
   _onKeyDown(ev) {
-    //30.
-
     if (ev.key === 'ArrowUp' || ev.key === 'ArrowDown') {
       ev.preventDefault();
       ev.stopPropagation();
@@ -158,14 +123,12 @@ export class litAutocomplete extends LitElement {
 
   _onKeyUp(ev) {
     switch (ev.key) {
-      //32.
       case 'ArrowUp':
         ev.preventDefault();
         ev.stopPropagation();
         this._markPreviousElement();
         break;
 
-      //33.
       case 'ArrowDown':
         ev.preventDefault();
         ev.stopPropagation();
@@ -173,7 +136,6 @@ export class litAutocomplete extends LitElement {
         this._markNextElement();
         break;
 
-      //34.
       case 'Enter':
         this._highlightedEl && this._highlightedEl.click();
         break;
@@ -187,7 +149,6 @@ export class litAutocomplete extends LitElement {
           const maxSuggestions = this.maxSuggestions;
           let suggestions = this.getSuggestions();
 
-          //36.
           if (suggestions.length === 0) {
             suggestions = [];
             suggestions.push({
@@ -202,7 +163,6 @@ export class litAutocomplete extends LitElement {
     }
   }
 
-  //37.
   _markPreviousElement() {
     if (!this._highlightedEl || !this._highlightedEl.previousElementSibling) {
       return;
@@ -213,7 +173,6 @@ export class litAutocomplete extends LitElement {
     this._highlightedEl.classList.add('active');
   }
 
-  //38.
   _markNextElement() {
     if (!this._highlightedEl || !this._highlightedEl.nextElementSibling) {
       return;
@@ -224,13 +183,11 @@ export class litAutocomplete extends LitElement {
     this._highlightedEl.classList.add('active');
   }
 
-  //39.
   _onFocus(ev) {
     this._blur = false;
     this._matches.length && this.open();
   }
 
-  //40.
   _onBlur(ev) {
     this._blur = true;
     !this._mouseEnter && this.close();
@@ -240,12 +197,10 @@ export class litAutocomplete extends LitElement {
     this._mouseEnter = true;
   }
 
-  //41.
   _handleItemMouseEnter(ev) {
     this._mouseEnter = true;
   }
 
-  //42.
   _handleItemMouseLeave(ev) {
     this._mouseEnter = false;
     this._blur && this.close();
@@ -280,33 +235,28 @@ export class litAutocomplete extends LitElement {
     return suggestions;
   }
 
-  //44.
   open() {
     if (this._matches.length) {
       this.opened = true;
     }
   }
 
-  //45.
   close() {
     this.opened = false;
     this._highlightedEl = null;
   }
 
-  //46.
   suggest(suggestions) {
     this._matches = suggestions || [];
     this._matches.length ? this.open() : this.close();
     this.requestUpdate();
   }
 
-  //47.
   autocomplete(value, text) {
     this.contentElement.value = value;
 
     this.close();
 
-    //48.
     this.dispatchEvent(
       new CustomEvent('selected-autocomplete', {
         detail: {value, text},
@@ -316,7 +266,6 @@ export class litAutocomplete extends LitElement {
     );
   }
 
-  //49.
   render() {
     return html`
       <style>
@@ -329,7 +278,6 @@ export class litAutocomplete extends LitElement {
           left: 0;
           z-index: 5000;
           list-style-type: none;
-          /* border: 1px solid black; */
           max-width: 100%;
           border-radius: 6px;
           box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%),
@@ -347,16 +295,8 @@ export class litAutocomplete extends LitElement {
           transition: all 0.1s;
           padding: 10px;
           margin: 4px;
-          /* background: white; */
           border-radius: 8px;
-          width: 100%:
-
-          /* background: rgba(255, 255, 255, 0.25);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-          backdrop-filter: blur(4px);
-          -webkit-backdrop-filter: blur(4px);
-          border-radius: 0;
-          border: none; */
+          width: 100%;
         }
 
         li.no-matches {
@@ -418,16 +358,6 @@ export class litAutocomplete extends LitElement {
           }`;
 
           const searchTerm = this._inputEl.value;
-
-          // let finalSubstringIndex = 0;
-          let _matchingItemStartIndex = 0;
-
-          const {_matches} = this;
-
-          // searchterm - l
-          // string - hello
-          // substring = l
-
           const matchingItemText = matchingItem.text;
           const matchingItemChars = [];
           const markedMatchingChars = [];
@@ -444,7 +374,6 @@ export class litAutocomplete extends LitElement {
 
           // loop over the matchingItemsChars
           // to find which chars are in the search term
-
           matchingItemChars.map(
             (charInMatchingItem, charInMatchingItemIndex) => {
               const charInSearchTerm = searchTerm[charInMatchingItemIndex];
@@ -482,5 +411,4 @@ export class litAutocomplete extends LitElement {
   }
 }
 
-//51.
 window.customElements.define('lit-autocomplete', litAutocomplete);
