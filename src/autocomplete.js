@@ -184,26 +184,11 @@ export class litAutocomplete extends LitElement {
         this._highlightedEl && this._highlightedEl.click();
         break;
       default:
-        if (this.items.length) {
-          var suggestions = [];
-          var value = this.contentElement.value;
-
-          suggestions =
-            value &&
-            this.items
-              .filter(
-                (item) =>
-                  item.text
-                    .replace(',', '')
-                    .replace(/\s/g, '')
-                    .toLowerCase()
-                    .search(
-                      value.replace(',', '').replace(/\s/g, '').toLowerCase()
-                    ) != -1
-              )
-
-              //35.
-              .slice(0, this.maxSuggestions); // Limit results
+        const items = this.items;
+        if (items.length) {
+          const searchTerm = this.contentElement.value;
+          const maxSuggestions = this.maxSuggestions;
+          const suggestions = this.getSuggestions();
 
           //36.
           if (suggestions.length === 0) {
@@ -276,6 +261,31 @@ export class litAutocomplete extends LitElement {
   ////////////////////////////////////
   //Methods
   ////////////////////////////////////
+
+  getSuggestions() {
+    const items = this.items;
+    if (!items.length) return [];
+
+    const searchTerm = this.contentElement.value;
+    const maxSuggestions = this.maxSuggestions;
+
+    let suggestions = [];
+    suggestions =
+      searchTerm &&
+      items
+        .filter(
+          (item) =>
+            item.text
+              .replace(',', '')
+              .replace(/\s/g, '')
+              .toLowerCase()
+              .search(
+                searchTerm.replace(',', '').replace(/\s/g, '').toLowerCase()
+              ) != -1
+        )
+        .slice(0, maxSuggestions); // Limit results
+    return suggestions;
+  }
 
   //44.
   open() {
