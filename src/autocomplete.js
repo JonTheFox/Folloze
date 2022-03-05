@@ -347,12 +347,15 @@ export class litAutocomplete extends LitElement {
           transition: all 0.1s;
           padding: 10px;
           margin: 4px;
-          background: white;
+          /* background: white; */
           border-radius: 8px;
-        }
 
-        b.suggestion {
-          background: lightblue;
+          /* background: rgba(255, 255, 255, 0.25);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+          border-radius: 0;
+          border: none; */
         }
 
         li.no-matches {
@@ -374,7 +377,7 @@ export class litAutocomplete extends LitElement {
         }
 
         li.suggestion.active {
-          background: rgba(255, 255, 255, 0.25);
+          background: white;
           box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
           backdrop-filter: blur(4px);
           -webkit-backdrop-filter: blur(4px);
