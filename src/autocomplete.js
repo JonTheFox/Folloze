@@ -351,8 +351,17 @@ export class litAutocomplete extends LitElement {
           border-radius: 8px;
         }
 
+        b.suggestion {
+          background: lightblue;
+        }
+
         li.no-matches {
           padding: 8px;
+          background: white;
+        }
+
+        li .matching-char {
+          background: white;
         }
 
         .glass {
@@ -399,23 +408,71 @@ export class litAutocomplete extends LitElement {
         @mouseenter=${this._handleItemMouseEnter}
         @mouseleave=${this._handleItemMouseLeave}
       >
-        <!--50-->
-        ${this._matches.map((item) => {
+        ${this._matches.map((matchingItem) => {
           const className = `${
-            item.isNoMatchesText ? 'no-matches' : 'suggestion'
+            matchingItem.isNoMatchesText ? 'no-matches' : 'suggestion'
           }`;
+
+          const searchTerm = this._inputEl.value;
+
+          // let finalSubstringIndex = 0;
+          let _matchingItemStartIndex = 0;
+
+          const {_matches} = this;
+
+          // searchterm - l
+          // string - hello
+          // substring = l
+
+          const matchingItemText = matchingItem.text;
+          const matchingItemChars = [];
+          const markedMatchingChars = [];
+          // convert {value: "a", text: "a"} to "a"
+          for (
+            let charIndexInMatchingItem = 0;
+            charIndexInMatchingItem < matchingItemText.length;
+            charIndexInMatchingItem++
+          ) {
+            const currentMatchingItemChar =
+              matchingItemText[charIndexInMatchingItem];
+            matchingItemChars.push(currentMatchingItemChar);
+          }
+
+          // loop over the matchingItemsChars
+          // to find which chars are in the search term
+
+          matchingItemChars.map(
+            (charInMatchingItem, charInMatchingItemIndex) => {
+              const charInSearchTerm = searchTerm[charInMatchingItemIndex];
+
+              markedMatchingChars.push({
+                char: charInMatchingItem,
+                isMatching:
+                  charInSearchTerm?.toLowerCase?.() ===
+                  charInMatchingItem?.toLowerCase?.(),
+              });
+            }
+          );
+
+          console.log(markedMatchingChars);
+
           return html`
             <li
               class=${className}
               @click=${(ev) => {
                 console.log(item);
                 return this.autocomplete(
-                  item.text,
+                  item.searchTerm,
                   item.value ? item.value : null
                 );
               }}
             >
-              <span class="suggestion--text">${item.text}</span>
+              <span class="suggestion--text matching">
+                ${markedMatchingChars.map(({char, isMatching}) => {
+                  if (!isMatching) return html`${char}`;
+                  return html`<span class="matching-char">${char}</span>`;
+                })}
+              </span>
             </li>
           `;
         })}
