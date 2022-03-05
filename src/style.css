@@ -52,7 +52,7 @@ h1 {
 #autocomplete--input {
   margin: auto;
   width: 80vw;
-  max-width: 800px;
+  max-width: 600px;
   height: 40px;
   border-radius: 6px;
   border: 0.25px solid gray;

@@ -330,7 +330,7 @@ export class litAutocomplete extends LitElement {
           z-index: 5000;
           list-style-type: none;
           /* border: 1px solid black; */
-          max-width: 800px;
+          max-width: 100%;
           border-radius: 6px;
           box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%),
             0 6px 20px 0 rgb(0 0 0 / 19%);
@@ -349,6 +349,7 @@ export class litAutocomplete extends LitElement {
           margin: 4px;
           /* background: white; */
           border-radius: 8px;
+          width: 100%:
 
           /* background: rgba(255, 255, 255, 0.25);
           box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
