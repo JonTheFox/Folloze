@@ -460,10 +460,9 @@ export class litAutocomplete extends LitElement {
             <li
               class=${className}
               @click=${(ev) => {
-                console.log(item);
+                console.log(matchingItem);
                 return this.autocomplete(
-                  item.searchTerm,
-                  item.value ? item.value : null
+                  matchingItem.value ? matchingItem.value : null
                 );
               }}
             >
